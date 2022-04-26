@@ -32,6 +32,7 @@ class TreeBuilder {
     }
 
     renderAll() {
+        this.renderer.updateLabelList(this.labelSearch.base);
         this.renderer.renderTokens(this.tokenList, this.answer);
         this.renderer.updateCursor(this.cursor);
         this.renderer.updateMarkers(this.markers);
@@ -52,11 +53,16 @@ class TreeBuilder {
         }
         [this.level, this.index] = this.history.pop();
 
-        this.labelSearch = new LabelSearch(this.level);
+        this.resetLabelSearch();
         this.cursor = -1;
         this.markers = new Set();
         // Refresh
         this.renderAll();
+    }
+
+    resetLabelSearch() {
+        this.labelSearch = new LabelSearch(this.level);
+        this.renderer.updateLabelList(this.labelSearch.base)
     }
 
     cursorLeft() {
@@ -103,7 +109,7 @@ class TreeBuilder {
             this.index = 0;
         }
 
-        this.labelSearch = new LabelSearch(this.level);
+        this.resetLabelSearch();
         this.cursor = -1;
         this.markers = new Set();
         // Refresh
@@ -131,7 +137,7 @@ class TreeBuilder {
                 this.currentTree.collapse();
             }
         }
-        this.labelSearch = new LabelSearch(this.level);
+        this.resetLabelSearch();
         this.cursor = -1;
         this.markers = new Set();
         // Refresh
@@ -154,7 +160,7 @@ class TreeBuilder {
             this.currentTree.label = label;
         }
         // Refresh
-        this.labelSearch = new LabelSearch(this.level);
+        this.resetLabelSearch();
         this.renderer.updateCursor(this.cursor);
         this.renderer.updateMarkers(this.markers);
         this.renderer.renderTree(this.root, this.currentTree);

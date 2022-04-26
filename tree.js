@@ -34,7 +34,7 @@ class Tree {
     }
 
     static create(length) {
-        return new Tree("T", [0, length], true);
+        return new Tree("R", [0, length], true);
     }
 
     toObject(tokenList) {

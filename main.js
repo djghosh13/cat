@@ -13,9 +13,10 @@ function init() {
     // Initialize dataset
     for (var i = 0; i < data.length; i++) {
         let [answer, clue] = data[i];
-        let tokenList = clue.split(/\s+/).slice(0, -1);
+        let tokenList = clue.split(/\s+/);
+        let length = tokenList.pop();
         dataset.push({
-            "answer": answer,
+            "answer": reformatAnswer(answer, length),
             "clue": clue,
             "tokenList": tokenList,
             "parse": Tree.create(tokenList.length).toObject(tokenList),
@@ -24,6 +25,7 @@ function init() {
     }
     catinfo.querySelector(".progress .total").innerText = dataset.length;
     catinfo.querySelector(".progress .current").innerText = entryIndex + 1;
+
     // Initialize tree builder
     window.builder = new TreeBuilder(renderer);
     builder.import(dataset[entryIndex]);
@@ -33,9 +35,9 @@ function init() {
 
     document.addEventListener("keydown", event => {
         let prevent = true;
-        if (event.ctrlKey) {
-            if (event.key == "s") saveAllEntries();
-            else if (event.key == "z") builder.undo();
+        if (event.ctrlKey || event.metaKey) {
+            if (!event.shiftKey && event.key == "s") saveAllEntries();
+            else if (!event.shiftKey && event.key == "z") builder.undo();
             else prevent = false;
         } else if (event.key == "Tab") {
             nextEntry(event.shiftKey ? -1 : 1);
@@ -72,6 +74,16 @@ function init() {
     });
 }
 
+
+function reformatAnswer(answer, length) {
+    answer = Array.from(answer);
+    let newAnswer = [];
+    for (let part of length.slice(1, -1).split(/([,-])/)) {
+        if (isNaN(part)) newAnswer.push(part.replace(",", " "));
+        else newAnswer = newAnswer.concat(answer.splice(0, +part));
+    }
+    return newAnswer.join("");
+}
 
 function nextEntry(direction) {
     dataset[entryIndex]["parse"] = builder.export();

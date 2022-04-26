@@ -1,18 +1,23 @@
-const ODD_LABEL_SET = [
+const ZERO_LABEL_SET = [];
+const ONE_LABEL_SET = [
     ["D", "Definition"],
+    ["C", "Clue"],
+    ["X", "Extra"]
+].sort((a, b) => a[0].length - b[0].length);
+const ODD_LABEL_SET = [
     ["C", "Clue"],
     ["K", "Keyword"],
     ["X", "Extra"]
 ].sort((a, b) => a[0].length - b[0].length);
-
 const EVEN_LABEL_SET = [
     ["L", "Literal"],
     ["S", "Synonym"],
     ["A", "Abbreviation"],
     
-    ["LS", "Letter selection"],
-    ["W", "Wordplay"],
+    ["T", "Transformation"],
+    ["M", "Merge"],
     ["AN", "Anagram"],
+    ["CH", "Charades"],
     ["H", "Hidden clue"],
     ["HP", "Homophone"],
 
@@ -23,9 +28,10 @@ const EVEN_LABEL_SET = [
 class LabelSearch {
     constructor(level) {
         this.search = "";
-        this.base = (level == 0) ? []
-            : (level % 2 == 0) ? EVEN_LABEL_SET
-            : ODD_LABEL_SET;
+        this.base = (level == 0) ? ZERO_LABEL_SET
+            : (level == 1) ? ONE_LABEL_SET
+            : (level % 2 == 1) ? ODD_LABEL_SET
+            : EVEN_LABEL_SET;
         this.valid = this.base;
     }
 

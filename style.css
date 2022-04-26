@@ -1,5 +1,8 @@
 html {
     height: 100%;
+
+    --menu-bg-color: rgb(243, 217, 187);
+    --menu-border-color: rgb(90, 50, 7);
 }
 
 body {
@@ -22,14 +25,16 @@ body {
     left: 0;
     top: 0;
 
-    border-bottom: 2pt solid rgb(108, 13, 127);
-    border-right: 2pt solid rgb(108, 13, 127);
-    border-bottom-right-radius: 8pt;
-
     padding: 4pt;
 
+    border-bottom: 2pt solid var(--menu-border-color);
+    border-right: 2pt solid var(--menu-border-color);
+    border-bottom-right-radius: 8pt;
+
+    background-color: var(--menu-bg-color);
+
     font-size: 0.84em;
-    color: rgb(108, 13, 127);
+    color: var(--menu-border-color);
 }
 
 #info .progress {
@@ -41,19 +46,27 @@ body {
     right: 0;
     top: 0;
 
-    border-bottom: 2pt solid rgb(108, 13, 127);
-    border-left: 2pt solid rgb(108, 13, 127);
-    border-bottom-left-radius: 8pt;
-
     padding: 4pt;
 
+    border-bottom: 2pt solid var(--menu-border-color);
+    border-left: 2pt solid var(--menu-border-color);
+    border-bottom-left-radius: 8pt;
+    
+    background-color: var(--menu-bg-color);
+
     font-size: 0.84em;
-    color: rgb(108, 13, 127);
+    color: var(--menu-border-color);
 }
 
 #labelinfo .title {
+    margin-bottom: 4pt;
     padding: 2pt 8pt;
     text-decoration: underline;
+    text-align: center;
+}
+
+#labelinfo .labels .label-entry {
+    padding: 2pt;
 }
 
 /* Cryptic Annotation Tool */
@@ -148,7 +161,7 @@ body {
 /* Filler space */
 
 #cat .filler {
-    flex: 0 1 120pt;
+    flex: 0 2 120pt;
 }
 
 /* Tree */

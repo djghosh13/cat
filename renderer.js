@@ -55,6 +55,21 @@ class Renderer {
         });
     }
 
+    updateLabelList(list) {
+        const listElement = document.querySelector("#labelinfo .labels");
+        listElement.innerHTML = "";
+
+        for (let entry of list) {
+            let [token, desc] = entry;
+
+            let element = document.createElement("div");
+            element.classList.add("label-entry");
+            element.innerHTML = `<strong>(${token})</strong> ${desc}`;
+
+            listElement.appendChild(element);
+        }
+    }
+
     renderTree(root, selectedNode = null) {
         // Re-render entire tree
         let container = this.cat.querySelector(".treenodes");

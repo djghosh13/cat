@@ -33,8 +33,13 @@ def _main():
     # Extract list of clues
     clues = []
     for entry in puzzle["entries"]:
-        if re.search(r"\([0-9\-,]+\)$", entry["clue"]):
-            clues.append((entry["solution"], entry["clue"].strip().replace("  ", " ")))
+        if entry["id"] != entry["group"][0]:
+            continue
+        solution = entry["solution"]
+        for otherid in entry["group"][1:]:
+            otherentry, *_ = filter(lambda e, i=otherid: e["id"] == i, puzzle["entries"])
+            solution += otherentry["solution"]
+        clues.append(CrypticClue(solution, entry["clue"].strip().replace("  ", " ")))
 
     print("Content-Type: text/json")
     print()
