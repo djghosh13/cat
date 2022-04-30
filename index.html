@@ -6,10 +6,14 @@
         <script type="text/javascript" src="renderer.js"></script>
         <script type="text/javascript" src="labelsearch.js"></script>
         <script type="text/javascript" src="treebuilder.js"></script>
+        <script type="text/javascript" src="dataset.js"></script>
         <script type="text/javascript" src="main.js"></script>
         <link rel="stylesheet" href="style.css" />
     </head>
     <body>
+        <div class="dropzone">
+            Import from File...
+        </div>
         <canvas id="graphics"></canvas>
         <div id="cat" class="top-down">
             <div class="answer"></div>
@@ -18,6 +22,7 @@
             <div class="treenodes"></div>
         </div>
         <div id="info">
+            <div class="puzzlename">N/A</div>
             <div class="progress">
                 <span class="current">0</span> of <span class="total">0</span>
             </div>

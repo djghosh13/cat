@@ -27,6 +27,20 @@ class Renderer {
         }
         entryElement.appendChild(spaceElement.cloneNode());
         this.cat.querySelector(".wordlist").appendChild(entryElement);
+
+        this.resizeTokens();
+    }
+
+    resizeTokens() {
+        const entry = this.cat.querySelector(".wordlist .clue-entry");
+        if (entry.childNodes.length) {
+            let width = entry.lastChild.getBoundingClientRect().right - entry.firstChild.getBoundingClientRect().left;
+            let fixedWidth = entry.firstChild.getBoundingClientRect().width * entry.querySelectorAll(".clue-space").length;
+            let target = 1 - (width - 0.95 * entry.offsetWidth) / (width - fixedWidth);
+            let newFontSize = parseFloat(entry.style["fontSize"] || "1em") * target;
+            newFontSize = Math.min(newFontSize, 1);
+            entry.style["fontSize"] = `${newFontSize}em`;
+        }
     }
 
     updateCursor(position) {

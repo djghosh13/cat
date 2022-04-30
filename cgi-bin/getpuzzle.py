@@ -39,11 +39,17 @@ def _main():
         for otherid in entry["group"][1:]:
             otherentry, *_ = filter(lambda e, i=otherid: e["id"] == i, puzzle["entries"])
             solution += otherentry["solution"]
-        clues.append(CrypticClue(solution, entry["clue"].strip().replace("  ", " ")))
+        clues.append(CrypticClue(solution, entry["clue"].strip().replace("  ", " ").replace("\u00ad", "")))
+
+    puzzlename = " ".join(re.sub(r"[^A-Za-z0-9]", "", word.capitalize()) for word in puzzle["name"].split())
+    output = {
+        "name": puzzlename,
+        "clues": clues
+    }
 
     print("Content-Type: text/json")
     print()
-    print(json.dumps(clues))
+    print(json.dumps(output))
 
 
 if __name__ == "__main__":

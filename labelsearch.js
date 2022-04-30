@@ -25,6 +25,12 @@ const EVEN_LABEL_SET = [
     ["X", "Extra"]
 ].sort((a, b) => a[0].length - b[0].length);
 
+const TERMINAL_LABELS = new Set([
+    "D", "X", "U",
+    "L", "S", "A",
+    "K"
+]);
+
 class LabelSearch {
     constructor(level) {
         this.search = "";

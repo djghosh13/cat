@@ -66,6 +66,7 @@ class TreeBuilder {
     }
 
     cursorLeft() {
+        if (this.level % 2 == 1) return;
         let left = this.currentTree.leftmost(), right = this.currentTree.rightmost();
         if (left < right) {
             this.cursor = (this.cursor == -1) ? right
@@ -79,6 +80,7 @@ class TreeBuilder {
     }
 
     cursorRight() {
+        if (this.level % 2 == 1) return;
         let left = this.currentTree.leftmost(), right = this.currentTree.rightmost();
         if (left < right) {
             this.cursor = (this.cursor == -1) ? left + 1
@@ -93,6 +95,7 @@ class TreeBuilder {
 
     toggleMarker() {
         if (this.cursor == -1) return;
+        if (this.level % 2 == 1) return;
         if (this.markers.has(this.cursor)) this.markers.delete(this.cursor);
         else this.markers.add(this.cursor);
         // Refresh
@@ -119,9 +122,11 @@ class TreeBuilder {
     }
 
     splitTree() {
-        this.currentTree.descend(Array.from(this.markers).sort((a, b) => a - b));
-        if (this.level == this.bfs.length - 1) this.bfs.push([]);
-        this.bfs[this.level + 1].push(...this.currentTree.children);
+        if (!TERMINAL_LABELS.has(this.currentTree.label)) {
+            this.currentTree.descend(Array.from(this.markers).sort((a, b) => a - b));
+            if (this.level == this.bfs.length - 1) this.bfs.push([]);
+            this.bfs[this.level + 1].push(...this.currentTree.children);
+        }
 
         this.nextTree();
     }
