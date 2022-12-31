@@ -19,7 +19,12 @@ CrypticClue = namedtuple("CrypticClue", ["answer", "clue"])
 def _main():
     # Get URL
     form = cgi.FieldStorage()
-    url = "https://www.theguardian.com/crosswords/cryptic/" + str(form.getvalue("num", random.randrange(27000, 28000)))
+    if "cryptic" in form:
+        url = f"https://www.theguardian.com/crosswords/cryptic/{form.getfirst('cryptic')}"
+    elif "quiptic" in form:
+        url = f"https://www.theguardian.com/crosswords/quiptic/{form.getfirst('quiptic')}"
+    else:
+        url = f"https://www.theguardian.com/crosswords/cryptic/{random.randrange(27000, 28000)}"
 
     # Download HTML
     r = requests.get(url)
