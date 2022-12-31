@@ -126,8 +126,11 @@ window.addEventListener("DOMContentLoaded", () => {
     });
 
     // Load data
-    let puzzleID = new URLSearchParams(window.location.search).get("num");
-    let url = "cgi-bin/getpuzzle.py" + (puzzleID ? `?num=${puzzleID}` : "");
+    let params = new URLSearchParams(window.location.search);
+    let paramString = params.has("cryptic") ? `?cryptic=${params.get("cryptic")}` :
+        params.has("quiptic") ? `?quiptic=${params.get("quiptic")}` :
+        "";
+    let url = "cgi-bin/getpuzzle.py" + paramString;
     fetch(url).then(response => {
         console.log("Success!");
         return response.json();
